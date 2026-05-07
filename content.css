@@ -260,6 +260,10 @@
     border: 1px solid #383838 !important;
 }
 
+.f-hidden {
+    display: none !important;
+}
+
 /* CSS vertical divider between items */
 .f-divider {
     width: 1px !important;
