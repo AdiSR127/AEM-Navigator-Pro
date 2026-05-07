@@ -1,0 +1,548 @@
+/* --- 1. Global HUD Reset --- */
+#aem-hud-launcher, #aem-hud-menu, #aem-smart-footer, #aem-about-modal {
+    all: initial;
+    font-family: "Adobe Clean", "Source Sans Pro", helvetica, sans-serif !important;
+    box-sizing: border-box !important;
+}
+
+#aem-hud-launcher *, #aem-hud-menu *, #aem-smart-footer *, #aem-about-modal * {
+    box-sizing: border-box !important;
+}
+
+/* --- 2. Launcher Handle --- */
+#aem-hud-launcher {
+    position: fixed !important;
+    right: 0 !important;
+    top: 60px;
+    width: 34px !important;
+    height: 50px !important;
+    background: #fff !important;
+    border-left: 3px solid #E1251B !important;
+    border-top: 1px solid #e8e8e8 !important;
+    border-bottom: 1px solid #e8e8e8 !important;
+    border-right: none !important;
+    border-radius: 6px 0 0 6px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    cursor: pointer !important;
+    z-index: 2147483647 !important;
+    box-shadow: -3px 0 10px rgba(0,0,0,0.08) !important;
+    /* spring easing on translate; right handles menu-open slide */
+    transition:
+        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.25s ease,
+        background 0.2s ease,
+        right 0.3s ease !important;
+    user-select: none !important;
+    touch-action: none !important;
+}
+
+/* Peek left on hover — spring easing makes it feel alive */
+#aem-hud-launcher:hover {
+    transform: translateX(-5px) !important;
+    box-shadow: -7px 0 18px rgba(0,0,0,0.13) !important;
+}
+
+#aem-hud-launcher:hover .launcher-logo-img {
+    transform: scale(1.1) !important;
+}
+
+/* Active / open state */
+#aem-hud-launcher.menu-open {
+    right: 280px !important;
+    border-radius: 6px 0 0 0 !important;
+    background: #fff !important;
+    border-left-color: #E1251B !important;
+    box-shadow: -3px 0 10px rgba(0,0,0,0.08) !important;
+    transform: none !important;
+}
+
+#aem-hud-launcher.menu-open .launcher-logo-img {
+    filter: none !important;
+    transform: none !important;
+}
+
+/* Peek on hover while menu is open (close affordance) */
+#aem-hud-launcher.menu-open:hover {
+    background: #fff !important;
+    transform: translateX(-5px) !important;
+    box-shadow: -7px 0 18px rgba(0,0,0,0.13) !important;
+}
+
+.launcher-logo-img {
+    height: 30px !important;
+    pointer-events: none !important;
+    object-fit: contain !important;
+    transition:
+        filter 0.2s ease,
+        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    transform-origin: center !important;
+}
+
+
+/* --- 3. Side Menu Panel --- */
+#aem-hud-menu {
+    position: fixed !important;
+    right: 0 !important;
+    width: 280px !important;
+    transform: translateX(100%) !important;
+    background: #FFFFFF !important;
+    border-left: 1px solid #D5D5D5 !important;
+    border-bottom: 1px solid #D5D5D5 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    z-index: 2147483646 !important;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.08) !important;
+    transition: transform 0.3s ease !important;
+    overflow: hidden !important;
+}
+
+#aem-hud-menu.is-visible {
+    transform: translateX(0) !important;
+}
+
+.menu-header {
+    padding: 15px !important;
+    border-top: 4px solid #E1251B !important;
+    background: #FFFFFF !important;
+}
+
+.pro-title {
+    display: block !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    color: #2C2C2C !important;
+    text-transform: uppercase !important;
+    margin-bottom: 10px !important;
+}
+
+#aem-hud-search {
+    width: 100% !important;
+    height: 32px !important;
+    padding: 0 10px !important;
+    border: 1px solid #BCBCBC !important;
+    border-radius: 4px !important;
+    font-size: 12px !important;
+    outline: none !important;
+}
+
+#hud-content-scroll {
+    overflow-y: auto !important;
+    flex-grow: 1 !important;
+    padding-bottom: 10px !important;
+}
+
+.hud-category-header {
+    font-size: 9px !important;
+    font-weight: 800 !important;
+    color: #777 !important;
+    background: #F5F5F5 !important;
+    padding: 8px 15px !important;
+    text-transform: uppercase;
+    border-bottom: 1px solid #EEE !important;
+}
+
+.hud-btn {
+    width: 100% !important;
+    height: 38px !important;
+    padding: 0 15px !important;
+    background: #FFF !important;
+    border: none !important;
+    border-bottom: 1px solid #F5F5F5 !important;
+    display: flex !important;
+    align-items: center !important;
+    font-size: 12px !important;
+    color: #444 !important;
+    cursor: pointer !important;
+    border-left: 3px solid transparent !important;
+    text-align: left !important;
+}
+
+.hud-btn:hover, .hud-btn:focus, .hud-btn.selected {
+    background: #F9F9F9 !important;
+    border-left-color: #E1251B !important;
+    color: #000 !important;
+    outline: none !important;
+}
+
+/* --- 4. Smart Footer (Single-Line Fixed) --- */
+#aem-smart-footer {
+    position: fixed !important;
+    bottom: -60px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 38px !important;
+    background: #1a1a1a !important;
+    border-top: 2px solid #E1251B !important;
+    z-index: 2147483645 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 10px !important;
+    transition: bottom 0.3s ease !important;
+    box-sizing: border-box !important;
+}
+
+#aem-smart-footer.active {
+    bottom: 0 !important;
+}
+
+.footer-left-content {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    overflow: hidden !important;
+    flex-shrink: 1 !important;
+    margin-right: 15px !important;
+}
+
+.brand-name {
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    color: #E1251B !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase;
+    flex-shrink: 0 !important;
+}
+
+.footer-sep-main {
+    height: 20px !important;
+    width: 1px !important;
+    background: #333 !important;
+    margin: 0 10px !important;
+    flex-shrink: 0 !important;
+}
+
+.page-display-val {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    gap: 8px !important;
+}
+
+/* Stacked label + value per metadata field */
+.f-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 2px !important;
+    flex-shrink: 0 !important;
+}
+
+.f-label {
+    font-size: 7px !important;
+    color: #666 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
+    line-height: 1 !important;
+    display: block !important;
+}
+
+.f-val {
+    font-size: 10px !important;
+    color: #d0d0d0 !important;
+    line-height: 1 !important;
+    display: block !important;
+}
+
+.f-badge {
+    background: #2A2A2A !important;
+    color: #aaa !important;
+    padding: 1px 5px !important;
+    border-radius: 3px !important;
+    font-family: "SFMono-Regular", Consolas, monospace !important;
+    font-size: 9px !important;
+    border: 1px solid #383838 !important;
+}
+
+/* CSS vertical divider between items */
+.f-divider {
+    width: 1px !important;
+    height: 22px !important;
+    background: #333 !important;
+    flex-shrink: 0 !important;
+    display: block !important;
+}
+
+.node-type-badge {
+    background: #2A2A2A !important;
+    color: #aaa !important;
+    padding: 1px 5px !important;
+    border-radius: 3px !important;
+    font-family: "SFMono-Regular", Consolas, monospace !important;
+    font-size: 9px !important;
+    border: 1px solid #383838 !important;
+}
+
+.footer-right-actions {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    flex-shrink: 0 !important;
+    gap: 6px !important;
+    min-width: fit-content !important;
+}
+
+.f-mini-btn {
+    background: #E1251B !important;
+    color: #FFF !important;
+    border: none !important;
+    padding: 4px 8px !important;
+    border-radius: 3px !important;
+    font-size: 9px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+}
+
+.f-mini-btn:hover {
+    background: #b91d15 !important;
+}
+
+#f-dismiss {
+    color: #555 !important;
+    font-size: 18px !important;
+    cursor: pointer !important;
+    margin-left: 4px !important;
+    background: none !important;
+    border: none !important;
+}
+
+/* --- 5. Optimized About Modal (Compact) --- */
+#aem-about-modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0,0,0,0.8) !important;
+    display: none !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 2147483647 !important;
+}
+
+#aem-about-modal.is-active { display: flex !important; }
+
+.about-modal-content {
+    background: #FFFFFF !important;
+    width: 360px !important;
+    border-radius: 6px !important;
+    border-top: 4px solid #E1251B !important;
+    padding: 16px !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5) !important;
+    text-align: left !important;
+}
+
+.about-header {
+    font-size: 9px !important;
+    font-weight: 800 !important;
+    color: #999 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 10px !important;
+}
+
+.about-hero {
+    display: flex !important;
+    align-items: center !important;
+    margin-bottom: 10px !important;
+    gap: 10px !important;
+}
+
+.about-logo {
+    width: 32px !important;
+    height: 32px !important;
+    object-fit: contain !important;
+}
+
+.about-title-group h2 {
+    margin: 0 0 3px 0 !important;
+    font-size: 15px !important;
+    color: #222 !important;
+    font-weight: 700 !important;
+}
+
+.about-hero-meta {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+}
+
+.version-tag {
+    font-size: 10px !important;
+    background: #f0f0f0 !important;
+    padding: 2px 8px !important;
+    border-radius: 10px !important;
+    color: #666 !important;
+    flex-shrink: 0 !important;
+}
+
+.about-tagline {
+    font-size: 11px !important;
+    color: #E1251B !important;
+    font-style: italic !important;
+    font-weight: 600 !important;
+}
+
+.about-desc {
+    font-size: 11px !important;
+    line-height: 1.55 !important;
+    color: #444 !important;
+    margin: 0 0 10px 0 !important;
+    background: #f9f9f9 !important;
+    padding: 8px 10px !important;
+    border-radius: 4px !important;
+    border-left: 3px solid #E1251B !important;
+}
+
+.about-features {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+    margin-bottom: 10px !important;
+}
+
+.about-feature {
+    background: #FAFAFA !important;
+    border: 1px solid #EFEFEF !important;
+    border-left: 3px solid #E1251B !important;
+    border-radius: 0 4px 4px 0 !important;
+    padding: 6px 8px !important;
+}
+
+.feature-label {
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    color: #1E1E1E !important;
+    margin-bottom: 2px !important;
+    display: block !important;
+}
+
+.feature-desc {
+    font-size: 9px !important;
+    color: #888 !important;
+    line-height: 1.4 !important;
+    display: block !important;
+}
+
+.about-meta {
+    border-top: 1px solid #eee !important;
+    padding-top: 8px !important;
+    margin-bottom: 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+}
+
+.meta-item {
+    font-size: 11px !important;
+    color: #666 !important;
+    display: flex !important;
+    gap: 6px !important;
+}
+
+.meta-item strong {
+    color: #444 !important;
+    font-weight: 700 !important;
+    flex-shrink: 0 !important;
+    min-width: 68px !important;
+}
+
+.dev-link {
+    color: #E1251B !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+}
+
+.dev-link:hover { text-decoration: underline !important; }
+
+#close-about {
+    width: 100% !important;
+    height: 34px !important;
+    background: #222 !important;
+    color: #FFF !important;
+    border: none !important;
+    border-radius: 4px !important;
+    font-weight: 700 !important;
+    font-size: 11px !important;
+    cursor: pointer !important;
+    transition: background 0.2s !important;
+    text-transform: uppercase !important;
+}
+
+#close-about:hover { background: #E1251B !important; }
+
+.hidden { display: none !important; }
+
+/* --- Settings Modal --- */
+#aem-settings-modal {
+    position: fixed !important; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8) !important; display: none !important;
+    align-items: center !important; justify-content: center !important; z-index: 2147483647 !important;
+}
+#aem-settings-modal.is-active { display: flex !important; }
+
+.settings-modal-content {
+    background: #FFF !important; width: 320px !important; border-radius: 8px !important;
+    border-top: 5px solid #222 !important; padding: 20px !important;
+}
+
+.settings-header {
+    font-size: 10px !important; font-weight: 800 !important; color: #999 !important;
+    letter-spacing: 1px !important; margin-bottom: 15px !important;
+}
+
+.setting-row {
+    display: flex !important; justify-content: space-between !important; align-items: center !important;
+    padding: 10px 0 !important; border-bottom: 1px solid #eee !important;
+    font-size: 12px !important; color: #333 !important;
+}
+
+.main-toggle { font-weight: 800 !important; border-bottom: 2px solid #eee !important; }
+
+.settings-group { padding-left: 15px !important; border-left: 2px solid #f0f0f0 !important; }
+
+#save-settings {
+    margin-top: 20px !important; width: 100% !important; height: 36px !important;
+    background: #E1251B !important; color: #FFF !important; border: none !important;
+    border-radius: 4px !important; font-weight: 700 !important; cursor: pointer !important;
+}
+
+/* --- Header Layout Fix --- */
+.header-top-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 10px !important;
+}
+
+.pro-title {
+    margin-bottom: 0 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+}
+
+#open-settings-btn {
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-size: 16px !important;
+    padding: 0 5px !important;
+    transition: transform 0.2s ease !important;
+    line-height: 1 !important;
+}
+
+#open-settings-btn:hover {
+    transform: rotate(45deg) !important;
+}
+
+.settings-trigger-btn {
+    display: none !important;
+}

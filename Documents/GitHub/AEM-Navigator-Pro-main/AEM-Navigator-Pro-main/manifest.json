@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "AEM Navigator Pro",
+  "version": "1.1",
+  "description": "Stop hunting for URLs. Start Navigating.",
+  "icons": {
+    "128": "images/logo-icon.png"
+  },
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": ["https://sheets.googleapis.com/*"],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/editor.html/*",
+        "*://*/sites.html/*",
+        "*://*/assets.html/*",
+        "*://*/aem/start.html*",
+        "*://*/crx/de/*",
+        "*://*/crx/packmgr/*",
+        "*://*/system/console/*",
+        "*://*/content/dam/*",
+        "*://*/content/*.html"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    { 
+      "resources": ["images/logo-icon.png"], 
+      "matches": ["<all_urls>"] 
+    }
+  ]
+}
