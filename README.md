@@ -159,6 +159,9 @@ AEM-Navigator-Pro/
 
 ---
 
+## Privacy Policy
+This extension, "AEM Navigator Pro," does not collect, store, or transmit any user data to any external server. All JCR metadata (e.g., Node Type, User, Status) are fetched locally from the user's authenticated AEM session and displayed only within the extension's interface. Users are advised to review the privacy policies of their respective Adobe Experience Manager instances.
+
 ## License
 
 MIT
