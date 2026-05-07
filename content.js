@@ -284,38 +284,40 @@
                 <span class="f-label">Node</span>
                 <span class="f-val">${jcrPath.split('/').pop().toUpperCase()}</span>
             </span>
-            <span class="f-divider" style="display:${appSettings.showNodeType?'block':'none'}"></span>
-            <span class="f-item" style="display:${appSettings.showNodeType?'flex':'none'}">
+            <span class="f-divider${appSettings.showNodeType ? '' : ' f-hidden'}"></span>
+            <span class="f-item${appSettings.showNodeType ? '' : ' f-hidden'}">
                 <span class="f-label">Type</span>
                 <span id="f-node-type" class="f-val f-badge">...</span>
             </span>
-            <span class="f-divider" style="display:${appSettings.showUser?'block':'none'}"></span>
-            <span class="f-item" style="display:${appSettings.showUser?'flex':'none'}">
+            <span class="f-divider${appSettings.showUser ? '' : ' f-hidden'}"></span>
+            <span class="f-item${appSettings.showUser ? '' : ' f-hidden'}">
                 <span class="f-label">User</span>
                 <span id="f-user" class="f-val f-badge">...</span>
             </span>
-            <span class="f-divider" style="display:${appSettings.showModified?'block':'none'}"></span>
-            <span class="f-item" style="display:${appSettings.showModified?'flex':'none'}">
+            <span class="f-divider${appSettings.showModified ? '' : ' f-hidden'}"></span>
+            <span class="f-item${appSettings.showModified ? '' : ' f-hidden'}">
                 <span class="f-label">Mod By</span>
                 <span id="f-mod" class="f-val f-badge">...</span>
             </span>
-            <span class="f-divider" style="display:${appSettings.showStatus?'block':'none'}"></span>
-            <span class="f-item" style="display:${appSettings.showStatus?'flex':'none'}">
+            <span class="f-divider${appSettings.showStatus ? '' : ' f-hidden'}"></span>
+            <span class="f-item${appSettings.showStatus ? '' : ' f-hidden'}">
                 <span class="f-label">Status</span>
                 <span id="f-stat" class="f-val f-badge">...</span>
             </span>
         `;
         
+        const isDam = jcrPath.startsWith('/content/dam');
+
         const actions = document.querySelector('.footer-right-actions');
         actions.innerHTML = `
             <button class="f-mini-btn" id="f-crx">Open in CRX/DE</button>
-            <button class="f-mini-btn" id="f-pub">View as Published</button>
+            ${!isDam ? '<button class="f-mini-btn" id="f-pub">View as Published</button>' : ''}
             <button class="f-mini-btn" id="f-json">View JSON</button>
             <button id="f-dismiss">×</button>
         `;
 
         document.getElementById('f-crx').onclick = () => window.open(`${location.origin}/crx/de/index.jsp#${jcrPath}`, '_blank');
-        document.getElementById('f-pub').onclick = () => window.open(`${location.origin}${jcrPath}.html?wcmmode=disabled`, '_blank');
+        if (!isDam) document.getElementById('f-pub').onclick = () => window.open(`${location.origin}${jcrPath}.html?wcmmode=disabled`, '_blank');
         document.getElementById('f-json').onclick = () => window.open(`${location.origin}${jcrPath}.infinity.json`, '_blank');
         document.getElementById('f-dismiss').onclick = () => footer.classList.remove('active');
 
